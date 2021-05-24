@@ -15,12 +15,18 @@ exports.createUser = (req, res, next) =>{
                         message: 'Error occured while hashing password'
                     })
                 } else{
+                    //console.log(req.files['image'][0])
+                    console.log(req.files)
                     const user = new User({
                         firstName: req.body.firstName,
                         lastName: req.body.lastName,
                         email: req.body.email,
                         phoneNumber: req.body.phoneNumber,
                         password: hashedPassword,
+                        image: req.files['image'][0].location,
+                        profilePicture: req.files['image'][0].location,
+                        // image: req.files['image][0],
+                        // profilePicture: req.files['image][0],
                         referalPhoneNumberOrPromoCode: req.body.referalPhoneNumberOrPromoCode,
                         heardAboutUs: req.body.heardAboutUs
                     })
@@ -75,6 +81,7 @@ exports.signUserIn = (req, res, next) => {
         })
     })
 }
+
 
 
 

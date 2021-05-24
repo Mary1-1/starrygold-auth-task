@@ -9,6 +9,8 @@ const authSchema = new Schema({
     password: { type: String, required: true},
     referalPhoneNumberOrPromoCode: { type: Number, required: true},
     heardAboutUs: { type: String, required: true},
+    image: { type: Object, required: true },
+    profilePicture: { type: Object, required: true },
     resetToken: String,
     resetTokenExpiration: Date
 })

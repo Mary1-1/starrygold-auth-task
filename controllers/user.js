@@ -2,14 +2,14 @@ const User = require('../models/auth')
 
 
 exports.getUser = (req, res, next) =>{
-    const id = req.params.userId
+    const id = req.userData.userId
     User.findById(id).then(user =>{
         if(!user){
-            res.status().json({
+            return res.status().json({
                 message: 'Invalid User'
             })
         } else {
-            res.status(200).json({
+            return res.status(200).json({
                 user: user
             })
         }

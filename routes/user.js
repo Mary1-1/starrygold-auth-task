@@ -4,7 +4,7 @@ const router = express.Router()
 const userCtrl = require('../controllers/user')
 const isAuth = require('../middleware/userAuth')
 
-router.get('/:userId', isAuth, userCtrl.getUser)
+router.get('/me', isAuth, userCtrl.getUser)
 
 
 module.exports = router
