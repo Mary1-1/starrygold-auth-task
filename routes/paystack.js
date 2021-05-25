@@ -3,11 +3,13 @@ const router = express.Router()
 
 const orderCtrl = require('../controllers/order')
 const userAuth = require('../middleware/userAuth')
+const bankCtrl = require('../controllers/paystack')
 
 
-router.get("/users/banks", userAuth, orderCtrl.getAllOrders)
+router.get("/users/banks", userAuth, bankCtrl.getAllBanks)
 
-router.post("/users/banks", userAuth, orderCtrl.createOrder)
+router.get("/users/banks/one", userAuth, bankCtrl.getOneBank)
+
 
 
 module.exports = router
