@@ -1,10 +1,9 @@
-const Order = require("../models/order");
+const Cart = require("../models/cart");
 const Product = require("../models/product");
-const Cart = require('../models/cart')
 
 
-exports.getAllOrder = (req, res, next) => {
-    Order.find({ user: req.userData.orderId }).then(data => {
+exports.getAllCart = (req, res, next) => {
+    Cart.find({ user: req.userData.userId }).then(data => {
       res.status(200).json({
         data: data
       })
@@ -17,25 +16,26 @@ exports.getAllOrder = (req, res, next) => {
 }
 
 
-exports.createOrder = (req, res, next) => {
-    Cart.find({_id: req.body.cart, user: req.userData.userId}).then(orders => {
-      if (!orders) {
+exports.createCart = (req, res, next) => {
+    const productid = req.body.product;
+    Product.find({_id: productid, user: req.userData.userId}).then(carts => {
+      if (!carts) {
         return res.status(404).json({
           message: "Product not found"
         })
       }
-      const order = new Order({
+      const cart = new Cart({
         product: productid,
         quantity: req.body.quantity,
         amount: req.body.amount,
         user:  req.userData.userId
       })
-      return order.save()
+      return cart.save()
     })
     .then(result => {
       console.log(result)
       res.status(201).json({
-        message: "Order has been created",
+        message: "Cart has been saved",
         data: result,
       })
     })
@@ -48,15 +48,15 @@ exports.createOrder = (req, res, next) => {
 }
 
 
-exports.getOneOrder = (req, res, next) => {
-    Order.findById(req.params.orderId).populate("product").then(order => {
-      if (!order) {
+exports.getOneCart = (req, res, next) => {
+    Cart.findById(req.params.cartId).populate("product").then(cart => {
+      if (!cart) {
         return res.status(404).json({
-          message: "Order not found"
+          message: "Cart not found"
         })
       }
       res.status(200).json({
-        order: order
+        cart: cart
       })
     })
     .catch(err => {
@@ -67,11 +67,11 @@ exports.getOneOrder = (req, res, next) => {
 }
 
 
-exports.deleteOrder = (req, res, next) => {
-    const id = req.params.orderId
-    Order.findOneAndDelete({_id: id, user: req.userData.userId}).then(result => {
+exports.deleteCart = (req, res, next) => {
+    const id = req.params.cartId
+    Cart.findOneAndDelete({_id: id, user: req.userData.userId}).then(result => {
       res.status(200).json({
-        message: "Order have been deleted"
+        message: "Cart have been deleted"
       })
     })
     .catch(err => {

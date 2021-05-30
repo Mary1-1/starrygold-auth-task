@@ -10,8 +10,9 @@ const mongoose = require('mongoose')
 const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/user')
 const productRoutes = require('./routes/product')
-const orderRoutes = require('./routes/order')
+const cartRoutes = require('./routes/cart')
 const paystackRoutes = require('./routes/paystack')
+const transanctionRoutes = require('./routes/transanction')
 const port = process.env.PORT || 3000
 
 
@@ -19,10 +20,11 @@ app.use(bodyParser.json());
 
 
 app.use(authRoutes)
-app.use(userRoutes)
+app.use('/users', userRoutes)
 app.use('/products', productRoutes)
-app.use('/orders', orderRoutes)
+app.use('/cart', cartRoutes)
 app.use(paystackRoutes)
+app.use(transanctionRoutes)
 
 mongoose.connect(process.env.MONGODB_LOCAL_DATABASE, {
     useNewUrlParser: true,

@@ -3,15 +3,16 @@ const router = express.Router()
 const multer = require('multer')
 const authCtrl = require('../controllers/auth')
 const aws = require('aws-sdk')
-const accessKey = 'AKIAIT2JDQRKDMTSU3MA';
-const secretKey = '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';
-const BUCKET_NAME = 'laas';
+const accessKey = process.env.accessKey
+const secretKey = process.env.secretKey
+const BUCKET_NAME = process.env.bucket_name
+const region = process.env.region
 const multerS3 = require('multer-s3');
 
 aws.config.update({
   secretAccessKey: secretKey,
   accessKeyId: accessKey,
-  region: 'us-east-1',
+  region: region
 });
 
 

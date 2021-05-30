@@ -5,12 +5,12 @@ const orderCtrl = require('../controllers/order')
 const userAuth = require('../middleware/userAuth')
 
 
-router.get("/", userAuth, orderCtrl.getAllOrders)
+router.get("/", orderCtrl.getAllOrder)
 
-router.post("/", userAuth, orderCtrl.createOrder)
+router.post("/", orderCtrl.createOrder)
 
-router.get("/:orderId", userAuth, orderCtrl.getOneOrder)
+router.get("/:orderId", orderCtrl.getOneOrder)
 
-router.delete("/:orderId", userAuth, orderCtrl.deleteOrder)
+router.delete("/:orderId", orderCtrl.deleteOrder)
 
 module.exports = router

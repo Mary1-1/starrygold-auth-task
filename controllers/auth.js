@@ -31,7 +31,8 @@ exports.createUser = (req, res, next) =>{
                         heardAboutUs: req.body.heardAboutUs
                     })
                     user.save().then(result =>{
-                        const token = jwt.sign({email: user.email, userId: user._id}, process.env.JWT_KEY, {expiresIn: "1h"})
+                        const token = jwt.sign({email: user.email, userId: user._id}, process.env.JWT_KEY)
+                            //{expiresIn: "1h"}
                             return res.status(200).json({
                                 message: "User signed up successfully",
                                 user: user,
@@ -39,7 +40,7 @@ exports.createUser = (req, res, next) =>{
                             })
                     }).catch(err =>{
                         res.status(200).json({
-                            message: 'User signed up succesfully'
+                            message: 'Cant sign user up'
                         })
                     })
                 }
@@ -62,7 +63,8 @@ exports.signUserIn = (req, res, next) => {
                     message: "Invalid email or password"
                 })
             } if (result) {
-                const token = jwt.sign({email: user.email, userId: user._id}, process.env.JWT_KEY, {expiresIn: "1h"})
+                //const token = jwt.sign({email: user.email, userId: user._id}, process.env.JWT_KEY, {expiresIn: "1h"})
+                const token = jwt.sign({email: user.email, userId: user._id}, process.env.JWT_KEY)
                 return res.status(200).json({
                     message: "User signed in successfully",
                     user: user,
