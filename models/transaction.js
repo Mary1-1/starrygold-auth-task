@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const transactionSchema = mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    cart: { type: mongoose.Schema.Types.ObjectId, ref: 'Cart', required: true },
+    cart: { type: mongoose.Schema.Types.ObjectId, ref: 'Cart'},
     product: {type: mongoose.Schema.Types.ObjectId, ref: 'Product'},
     transaction_ref: { type: String, default: ""},
     payment_ref: { type: String, default: ""},

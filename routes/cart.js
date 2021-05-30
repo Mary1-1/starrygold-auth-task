@@ -7,7 +7,7 @@ const userAuth = require('../middleware/userAuth')
 
 router.get("/", userAuth, cartCtrl.getAllCart)
 
-router.post("/", userAuth, cartCtrl.createCart)
+router.post("/", userAuth, cartCtrl.createCart)  
 
 router.get("/:cartId", userAuth, cartCtrl.getOneCart)
 

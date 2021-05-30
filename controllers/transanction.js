@@ -29,41 +29,39 @@ exports.postTransaction = async (req, res, next) =>{
 
 
   exports.verifyTransactions = async (req, res, next) =>{
-      const data = await axios.get(`https://api.paystack.co/transaction/verify/${req.body.reference}`, header_config)
+      try{
+        const data = await axios.get(`https://api.paystack.co/transaction/verify/${req.body.reference}`, header_config)
       console.log(data.data.data.status);
-      if(data){
-      /*if(data.data.data.status == "success"){
-        const transaction = new Transaction({
+      if(data && data.data.data.status == "success"){
+        const transaction = await Transaction.create({
           user: req.userData.userId,
-          transaction_ref: transaction_ref,
+          transaction_ref: data.data.data.transaction_ref,
           payment_ref: req.body.reference,
           payment_method: data.data.data.channel,
           amount: data.data.data.amount,
           status: data.data.data.status,
-          serialized_response: serialized_response
+          serialized_response: data.data.data.serialized_response
         })
-      transactions = await transaction.save()*/
+       const order = new Order({
+         user:  req.userData.userId,
+         cart: req.body.cartId,
+         transaction: transaction._id,
+       })
+       const orders = await order.save()
       return res.status(200).json({
-        message: 'Successful'
-      })
-      /*const order = new Order({
-        user:  req.userData.userId,
-        product: productid,
-        cart: cartid,
-        quantity: quantityid,
-        transaction: transactionid,
-      })
-      orders = await order.save()
-      return res.status(400).json({
+        transaction: transaction,
         order: orders,
-        error: true,
-        message: 'Order has been made'
-      })*/
-      }
-      return res.status(400).json({
-        error: true,
-        message: 'An error occured'
+        error: false,
+        message: 'Order has been created'
       })
+    }
+      }catch (e) {
+        console.log(e);
+        return res.status(400).json({
+        error: true,
+        message: 'An error occured, unable to verify transactions'
+      })
+      }
   }
 
 // exports.verifyTransactions = async (req, res, next) =>{
