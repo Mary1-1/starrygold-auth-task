@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Stripe Document Demo</title>
+<body>
+    <h3>Welcome to Payment Gateway</h3>
+    <form action="payment" method="POST"></form>
+    <script
+        src="//checkout.stripe.com/v2/checkout.js"
+        class="stripe-button"
+        data-key="<% key %>"
+        data-amount="7000"
+        data-currency="usd"
+        data_name="Gautam Sharma"
+        data-description="Buy React.js complete course"
+        data-locale="auto">
+    </script>
+</body>
+</html>
